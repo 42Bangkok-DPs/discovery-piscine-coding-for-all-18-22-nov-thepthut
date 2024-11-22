@@ -1,12 +1,17 @@
-from checkmate import checkmate 
+from checkmate import checkmate
+
 def main():
     board = """\
     R...
     .K..
-    ..P.
+    ....
     ....\
     """
-    print(checkmate(board))  # ทดสอบกระดานนี้
+    
+    try:
+        print(checkmate(board))  # ทดสอบกระดานนี้
+    except ValueError as e:
+        print(e)  # จะแสดงข้อความ error ถ้ามี King มากกว่าหนึ่งตัว
 
 if __name__ == "__main__":
     main()

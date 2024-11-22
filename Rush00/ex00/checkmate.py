@@ -3,18 +3,20 @@ def checkmate(board):
     board_rows = board.split("\n")
     board_matrix = [list(row) for row in board_rows]
 
-    # ค้นหาตำแหน่งของ King
+    
     king_position = None
+    king_count = 0  
+
     for i, row in enumerate(board_matrix):
         for j, cell in enumerate(row):
             if cell == 'K':
                 king_position = (i, j)
-                break
-        if king_position:
-            break
+                king_count += 1  
+                if king_count > 1:  
+                    raise ValueError("error")
 
     if not king_position:
-        return "Fail"  # กรณีไม่มี King บนกระดาน
+        return "Fail"  
 
     king_row, king_col = king_position
     directions = {
@@ -24,23 +26,22 @@ def checkmate(board):
         'Q': [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (1, -1), (-1, 1), (-1, -1)]  # Queen เดินทุกทิศ
     }
 
-    # วนหาหมากทุกตัวบนกระดาน
+    
     for i, row in enumerate(board_matrix):
         for j, cell in enumerate(row):
-            if cell in directions:  # ถ้าเป็นหมากที่มีทิศทาง
-                for dr, dc in directions[cell]:  # วนตรวจสอบทุกทิศทาง
+            if cell in directions:  
+                for dr, dc in directions[cell]:  
                     r, c = i + dr, j + dc
-                    while 0 <= r < len(board_matrix) and 0 <= c < len(board_matrix[0]):  # อยู่ในขอบเขต
-                        if (r, c) == king_position:  # ถ้าตรงกับตำแหน่ง King
+                    while 0 <= r < len(board_matrix) and 0 <= c < len(board_matrix[0]): 
+                        if (r, c) == king_position:  
                             return "Success"
-                        if board_matrix[r][c] != '.':  # ถ้ามีตัวขวาง
+                        if board_matrix[r][c] != '.':  
                             break
-                        # ถ้าหมากเป็น Rook, Bishop หรือ Queen เดินได้หลายช่อง
+                        
                         if cell in ['R', 'B', 'Q']:
                             r += dr
                             c += dc
                             continue
-                        break  # สำหรับ Pawn (P) จะเดินได้แค่ช่องเดียว
+                        break  
 
     return "Fail"  # ถ้าไม่มีหมากตัวไหน Check King ได้
-
