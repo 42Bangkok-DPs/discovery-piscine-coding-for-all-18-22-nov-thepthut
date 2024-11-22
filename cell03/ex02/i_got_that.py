@@ -1,10 +1,7 @@
-# Start a while loop to continuously ask for user input
+#!/usr/bin/env python
+user_input = input("What you gotta say? : ")
 while True:
-    user_input = input("What you gotta say? : ")
-    
-    # Check if the user input is "STOP"
-    if user_input == "STOP":
-        break  # Exit the loop when user enters "STOP"
-    
-    # Provide a response to the user input
-    print("I got that! Anything else? : " , end="")
+    if user_input != "STOP":
+      user_input = input("I got that! Anything else? : ")
+    elif user_input == "STOP":
+       break
